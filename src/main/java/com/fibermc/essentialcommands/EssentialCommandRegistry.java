@@ -203,12 +203,12 @@ public final class EssentialCommandRegistry {
 
         //Warp
         if (CONFIG.ENABLE_WARP) {
-            LiteralArgumentBuilder<ServerCommandSource> warpBuilder = CommandManager.literal("warp");
-            LiteralArgumentBuilder<ServerCommandSource> warpSetBuilder = CommandManager.literal("set");
-            LiteralArgumentBuilder<ServerCommandSource> warpTpBuilder = CommandManager.literal("tp");
-            LiteralArgumentBuilder<ServerCommandSource> warpTpOtherBuilder = CommandManager.literal("tp_other");
-            LiteralArgumentBuilder<ServerCommandSource> warpDeleteBuilder = CommandManager.literal("delete");
-            LiteralArgumentBuilder<ServerCommandSource> warpListBuilder = CommandManager.literal("list");
+            LiteralArgumentBuilder<ServerCommandSource> warpBuilder = CommandManager.literal("");
+            LiteralArgumentBuilder<ServerCommandSource> warpSetBuilder = CommandManager.literal("");
+            LiteralArgumentBuilder<ServerCommandSource> warpTpBuilder = CommandManager.literal("");
+            LiteralArgumentBuilder<ServerCommandSource> warpTpOtherBuilder = CommandManager.literal("");
+            LiteralArgumentBuilder<ServerCommandSource> warpDeleteBuilder = CommandManager.literal("");
+            LiteralArgumentBuilder<ServerCommandSource> warpListBuilder = CommandManager.literal("");
 
             warpSetBuilder
                 .requires(ECPerms.require(ECPerms.Registry.warp_set, 4))
