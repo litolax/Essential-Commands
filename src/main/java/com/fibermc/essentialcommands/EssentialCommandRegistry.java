@@ -113,7 +113,7 @@ public final class EssentialCommandRegistry {
         if (CONFIG.ENABLE_HOME) {
             LiteralArgumentBuilder<ServerCommandSource> homeBuilder = CommandManager.literal("home");
             LiteralArgumentBuilder<ServerCommandSource> homeSetBuilder = CommandManager.literal("set");
-            LiteralArgumentBuilder<ServerCommandSource> homeTpBuilder = CommandManager.literal("tp");
+            LiteralArgumentBuilder<ServerCommandSource> homeTpBuilder = CommandManager.literal("");
             LiteralArgumentBuilder<ServerCommandSource> homeTpOtherBuilder = CommandManager.literal("tp_other");
             LiteralArgumentBuilder<ServerCommandSource> homeTpOfflineBuilder = CommandManager.literal("tp_offline");
             LiteralArgumentBuilder<ServerCommandSource> homeDeleteBuilder = CommandManager.literal("delete");
@@ -186,6 +186,25 @@ public final class EssentialCommandRegistry {
             essentialCommandsRootNode.addChild(homeOverwriteBuilder.build());
         }
 
+        if (CONFIG.ENABLE_HOME) {
+            LiteralArgumentBuilder<ServerCommandSource> setHomeCommandBuilder = CommandManager.literal("sethome");
+            LiteralArgumentBuilder<ServerCommandSource> setHomeBuilder = CommandManager.literal("");
+
+            setHomeBuilder
+                    .requires(ECPerms.require(ECPerms.Registry.home_set, 0))
+                    .executes(new HomeSetCommand()::runDefault)
+                    .then(argument("home_name", StringArgumentType.word())
+                            .executes(new HomeSetCommand()));
+
+            LiteralCommandNode<ServerCommandSource> setHomeNode = setHomeCommandBuilder
+                    .requires(ECPerms.requireAny(ECPerms.Registry.Group.home_group, 0))
+                    .build();
+
+            setHomeNode.addChild(setHomeCommandBuilder.build());
+
+            registerNode.accept(setHomeNode);
+        }
+
         //Back
         if (CONFIG.ENABLE_BACK) {
             LiteralArgumentBuilder<ServerCommandSource> backBuilder = CommandManager.literal("back");
@@ -201,12 +220,12 @@ public final class EssentialCommandRegistry {
 
         //Warp
         if (CONFIG.ENABLE_WARP) {
-            LiteralArgumentBuilder<ServerCommandSource> warpBuilder = CommandManager.literal("");
-            LiteralArgumentBuilder<ServerCommandSource> warpSetBuilder = CommandManager.literal("");
+            LiteralArgumentBuilder<ServerCommandSource> warpBuilder = CommandManager.literal("warp");
+            LiteralArgumentBuilder<ServerCommandSource> warpSetBuilder = CommandManager.literal("set");
             LiteralArgumentBuilder<ServerCommandSource> warpTpBuilder = CommandManager.literal("");
-            LiteralArgumentBuilder<ServerCommandSource> warpTpOtherBuilder = CommandManager.literal("");
-            LiteralArgumentBuilder<ServerCommandSource> warpDeleteBuilder = CommandManager.literal("del");
-            LiteralArgumentBuilder<ServerCommandSource> warpListBuilder = CommandManager.literal("");
+            LiteralArgumentBuilder<ServerCommandSource> warpTpOtherBuilder = CommandManager.literal("tp_other");
+            LiteralArgumentBuilder<ServerCommandSource> warpDeleteBuilder = CommandManager.literal("delete");
+            LiteralArgumentBuilder<ServerCommandSource> warpListBuilder = CommandManager.literal("list");
 
             warpSetBuilder
                 .requires(ECPerms.require(ECPerms.Registry.warp_set, 4))
@@ -258,7 +277,7 @@ public final class EssentialCommandRegistry {
         if (CONFIG.ENABLE_SPAWN) {
             LiteralArgumentBuilder<ServerCommandSource> spawnBuilder = CommandManager.literal("spawn");
             LiteralArgumentBuilder<ServerCommandSource> spawnSetBuilder = CommandManager.literal("set");
-            LiteralArgumentBuilder<ServerCommandSource> spawnTpBuilder = CommandManager.literal("tp");
+            LiteralArgumentBuilder<ServerCommandSource> spawnTpBuilder = CommandManager.literal("");
 
             spawnSetBuilder
                 .requires(ECPerms.require(ECPerms.Registry.spawn_set, 4))
