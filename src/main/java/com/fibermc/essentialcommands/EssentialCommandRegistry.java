@@ -205,7 +205,7 @@ public final class EssentialCommandRegistry {
             LiteralArgumentBuilder<ServerCommandSource> warpSetBuilder = CommandManager.literal("");
             LiteralArgumentBuilder<ServerCommandSource> warpTpBuilder = CommandManager.literal("");
             LiteralArgumentBuilder<ServerCommandSource> warpTpOtherBuilder = CommandManager.literal("");
-            LiteralArgumentBuilder<ServerCommandSource> warpDeleteBuilder = CommandManager.literal("");
+            LiteralArgumentBuilder<ServerCommandSource> warpDeleteBuilder = CommandManager.literal("del");
             LiteralArgumentBuilder<ServerCommandSource> warpListBuilder = CommandManager.literal("");
 
             warpSetBuilder
