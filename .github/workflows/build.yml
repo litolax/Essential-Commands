@@ -20,6 +20,9 @@ jobs:
           java-version: 16
           distribution: 'adopt'
 
+      - name: Grant execute permission to gradlew script
+        run: chmod +x ./gradlew
+
       - name: Build with Gradle
         run: ./gradlew build
 
