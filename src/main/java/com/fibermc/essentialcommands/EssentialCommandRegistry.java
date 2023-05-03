@@ -222,7 +222,6 @@ public final class EssentialCommandRegistry {
         if (CONFIG.ENABLE_WARP) {
             LiteralArgumentBuilder<ServerCommandSource> warpBuilder = CommandManager.literal("warp");
             LiteralArgumentBuilder<ServerCommandSource> warpSetBuilder = CommandManager.literal("set");
-            LiteralArgumentBuilder<ServerCommandSource> warpTpBuilder = CommandManager.literal("");
             LiteralArgumentBuilder<ServerCommandSource> warpTpOtherBuilder = CommandManager.literal("tp_other");
             LiteralArgumentBuilder<ServerCommandSource> warpDeleteBuilder = CommandManager.literal("delete");
             LiteralArgumentBuilder<ServerCommandSource> warpListBuilder = CommandManager.literal("list");
@@ -234,8 +233,8 @@ public final class EssentialCommandRegistry {
                     .then(argument("requires_permission", BoolArgumentType.bool())
                         .executes(new WarpSetCommand())));
 
-            warpTpBuilder
-                .requires(ECPerms.require(ECPerms.Registry.warp_tp, 0))
+            warpBuilder
+                .requires(ECPerms.requireAny(ECPerms.Registry.Group.warp_group, 0))
                 .then(argument("warp_name", StringArgumentType.word())
                     .suggests(WarpSuggestion.STRING_SUGGESTIONS_PROVIDER)
                     .executes(new WarpTpCommand()));
@@ -261,14 +260,11 @@ public final class EssentialCommandRegistry {
                     (context) -> ManagerLocator.getInstance().getWorldDataManager().getWarpEntries()
                 ));
 
-            LiteralCommandNode<ServerCommandSource> warpNode = warpBuilder
-                .requires(ECPerms.requireAny(ECPerms.Registry.Group.warp_group, 0))
-                .build();
-            warpNode.addChild(warpTpBuilder.build());
-            warpNode.addChild(warpTpOtherBuilder.build());
+            LiteralCommandNode<ServerCommandSource> warpNode = warpBuilder.build();
             warpNode.addChild(warpSetBuilder.build());
             warpNode.addChild(warpDeleteBuilder.build());
             warpNode.addChild(warpListBuilder.build());
+            warpNode.addChild(warpTpOtherBuilder.build());
 
             registerNode.accept(warpNode);
         }
