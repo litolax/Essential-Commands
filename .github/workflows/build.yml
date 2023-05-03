@@ -1,0 +1,29 @@
+name: Build and Package Essential-Commands
+on:
+  push:
+    branches:
+      - 1.18.x
+  pull_request:
+    branches:
+      - 1.18.x
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup JDK 16
+        uses: actions/setup-java@v2
+        with:
+          java-version: '16'
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: essential-commands-build
+          path: build/libs/*.jar
